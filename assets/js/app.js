@@ -9,9 +9,9 @@ $(document).on("click", "#gifBtns button", function () {
     // Grabbing and storing the data-animal property value from the button
     var animal = $(this).attr("data-animal");
     var button = $(this);
+    var apiKey = "F6H0NODnWEYqT57AwDQnUNXRJ4HPePvi"
     // Constructing a queryURL using the animal name
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-        animal + "&api_key=tjUFS5NfN9BI4Y4bTOkAFj5NhyE2hhJF&limit=10";
+    var queryURL = `https://api.giphy.com/v1/gifs/search?q=${animal}&${apiKey}&limit=10`;
 
     // Performing an AJAX request with the queryURL
     $.ajax({
