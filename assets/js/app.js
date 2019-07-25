@@ -1,13 +1,14 @@
 var buttons = ["dog"];
 
-$(document).ready(function(){
+//generates inital buttons
+$(document).ready(function () {
     generateBtns();
 });
 
 $(document).on("click", "#gifBtns button", function () {
     // Grabbing and storing the data-animal property value from the button
     var animal = $(this).attr("data-animal");
-
+    var button = $(this);
     // Constructing a queryURL using the animal name
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
         animal + "&api_key=tjUFS5NfN9BI4Y4bTOkAFj5NhyE2hhJF&limit=10";
@@ -23,50 +24,61 @@ $(document).on("click", "#gifBtns button", function () {
 
             console.log(response);
             // storing the data from the AJAX request in the results variable
-            var results = response.data;
 
-            // Looping through each result item
-            for (var i = 0; i < results.length; i++) {
+            if (response.pagination.total_count === 0) {
+                //removes the button is no GIFs are found
+                console.log(button);
+                button.text("no GIF's Found");
+                button.fadeOut(250).fadeIn(250).fadeOut(250).fadeIn(250);
+                setTimeout(function(){button.remove()}, 1300);
+            } else {
+                var results = response.data;
 
-                // Creating and storing a div tag
-                var animalDiv = $("<div>");
+                // Looping through each result item
+                for (var i = 0; i < results.length; i++) {
 
-                // Creating a paragraph tag with the result item's rating
-                var p = $("<p>").text("Rating: " + results[i].rating);
+                    // Creating and storing a div tag
+                    var animalDiv = $("<div>");
 
-                // Creating and storing an image tag
-                var animalImage = $("<img>");
-                // Setting the src attribute of the image to a property pulled off the result item
-                animalImage.attr("src", results[i].images.fixed_height_still.url);
-                animalImage.attr("data-animate", results[i].images.fixed_height.url);
-                animalImage.attr("data-still", results[i].images.fixed_height_still.url);
-                animalImage.attr("data-state", "still");
+                    // Creating a paragraph tag with the result item's rating
+                    var p = $("<p>").text("Rating: " + results[i].rating);
 
-                // Appending the paragraph and image tag to the animalDiv                
-                animalDiv.append(animalImage);
-                animalDiv.append(p);
+                    // Creating and storing an image tag
+                    var animalImage = $("<img>");
+                    // Setting the src attribute of the image to a property pulled off the result item
+                    animalImage.attr("src", results[i].images.fixed_height_still.url);
+                    animalImage.attr("data-animate", results[i].images.fixed_height.url);
+                    animalImage.attr("data-still", results[i].images.fixed_height_still.url);
+                    animalImage.attr("data-state", "still");
 
-                // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div
-                $("#gifArea").prepend(animalDiv);
+                    // Appending the paragraph and image tag to the animalDiv                
+                    animalDiv.append(animalImage);
+                    animalDiv.append(p);
+
+                    // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div
+                    $("#gifArea").prepend(animalDiv);
+                }
             }
         });
 });
 
+//adds a button when input is filled and (+) button is clicked
 $("#addGIFbtn").on("click", function () {
     console.log($("#newBtnText").val())
 
     if ($("#newBtnText").val() != "") {
         buttons.push($("#newBtnText").val());
         console.log(buttons);
-       
+
         generateBtns();
     }
 });
 
-function generateBtns(){
+//Generates the buttons from the array
+function generateBtns() {
     $("#gifBtns").empty();
     $("#gifBtns").append($("<p>").text("Click to dispay GIF's"));
-    
+
     buttons.forEach(function (element) {
         var newBtn = $("<li>")
             .append($("<button>")
@@ -78,6 +90,7 @@ function generateBtns(){
     });
 }
 
+//listens for click to animate GIF's
 $(document).on("click", "img", function () {
     ($(this).attr("data-state") === "still") ?
     $(this).attr("src", $(this).attr("data-animate")).attr("data-state", "animate"):
