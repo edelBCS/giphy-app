@@ -11,7 +11,7 @@ $(document).on("click", "#gifBtns button", function () {
     var button = $(this);
     var apiKey = "F6H0NODnWEYqT57AwDQnUNXRJ4HPePvi"
     // Constructing a queryURL using the animal name
-    var queryURL = `https://api.giphy.com/v1/gifs/search?q=${animal}&api-key${apiKey}&limit=10`;
+    var queryURL = `https://api.giphy.com/v1/gifs/search?q=${animal}&api-key=${apiKey}&limit=10`;
 
     // Performing an AJAX request with the queryURL
     $.ajax({
