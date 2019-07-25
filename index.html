@@ -31,10 +31,18 @@
                 <h3>GIPHY Buttons</h3>
             </div>
 
-            <ul id="gifBtns" class="list-unstyled components">
+            <div class="input-group col-12">
+                <input id="newBtnText" type="text" class="form-control" placeholder="Button Name" aria-label="Button Name"
+                    aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-light" type="button" id="addGIFbtn">+</button>
+                </div>
+            </div>
+
+            <ul id="gifBtns" class="list-unstyled components mx-2">
                 <p>Click to dispay GIF's</p>
                 <li>
-                    <button class="btn btn-light mx-1 col-11" data-animal="dog">dog</button>
+                    <button class="btn btn-light col-12 my-1" data-animal="dog">dog</button>
                 </li>
             </ul>
         </nav>

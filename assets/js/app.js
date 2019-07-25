@@ -1,4 +1,4 @@
-$("button").on("click", function() {
+$(document).on("click", "#gifBtns button", function() {
     // Grabbing and storing the data-animal property value from the button
     var animal = $(this).attr("data-animal");
 
@@ -38,7 +38,20 @@ $("button").on("click", function() {
           animalDiv.append(animalImage);
 
           // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div
-          $("#gifArea").append(animalDiv);
+          $("#gifArea").prepend(animalDiv);
         }
       });
+  });
+
+  $("#addGIFbtn").on("click", function(){
+    console.log($("#newBtnText").val())
+    if ($("#newBtnText").val() != ""){
+        var newBtn = $("<li>")
+            .append($("<button>")
+                .addClass("btn btn-light col-12 my-1")
+                .attr("data-animal", $("#newBtnText").val())
+                .text($("#newBtnText").val()));
+        $("#gifBtns").append(newBtn);
+        $("#newBtnText").val("")
+    }
   });
