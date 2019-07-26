@@ -5,6 +5,7 @@ $(document).ready(function () {
     generateBtns();
 });
 
+//add gifs to page when button is clicked
 $(document).on("click", "#gifBtns button", function () {
     // Grabbing and storing the data-animal property value from the button
     var animal = $(this).attr("data-animal");
@@ -28,10 +29,13 @@ $(document).on("click", "#gifBtns button", function () {
             if (response.pagination.total_count === 0) {
                 //removes the button is no GIFs are found
                 console.log(button);
+                buttons.splice(buttons.indexOf(button.text()), 1);
                 button.text("no GIF's Found");
                 button.fadeOut(250).fadeIn(250).fadeOut(250).fadeIn(250);
-                setTimeout(function(){button.remove()}, 1300);
+                setTimeout(function(){generateBtns()}, 1300);
+                
             } else {
+                //generates the GIFs and ratings
                 var results = response.data;
 
                 // Looping through each result item
@@ -45,6 +49,7 @@ $(document).on("click", "#gifBtns button", function () {
 
                     // Creating and storing an image tag
                     var animalImage = $("<img>");
+
                     // Setting the src attribute of the image to a property pulled off the result item
                     animalImage.attr("src", results[i].images.fixed_height_still.url);
                     animalImage.attr("data-animate", results[i].images.fixed_height.url);
@@ -57,6 +62,7 @@ $(document).on("click", "#gifBtns button", function () {
 
                     // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div
                     $("#gifArea").prepend(animalDiv);
+                    console.log(buttons);
                 }
             }
         });
@@ -65,7 +71,7 @@ $(document).on("click", "#gifBtns button", function () {
 //adds a button when input is filled and (+) button is clicked
 $("#addGIFbtn").on("click", function () {
     console.log($("#newBtnText").val())
-
+    
     if ($("#newBtnText").val() != "") {
         buttons.push($("#newBtnText").val());
         console.log(buttons);
@@ -86,7 +92,7 @@ function generateBtns() {
                 .attr("data-animal", element)
                 .text(element));
         $("#gifBtns").append(newBtn);
-        $("#newBtnText").val("")
+        $("#newBtnText").val("");
     });
 }
 
