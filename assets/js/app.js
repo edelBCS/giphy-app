@@ -1,4 +1,4 @@
-var buttons = {btnInfo: ["dog"]};
+var buttons = {btnInfo: ["dog", "otter", "bat"]};
 
 //generates inital buttons
 $(document).ready(function () {
@@ -67,13 +67,13 @@ function saveBtns(){
 }
 
 function loadBtns(){
-    buttons = JSON.parse(localStorage.getItem("savedBtns"));
+    (localStorage.getItem("savedBtns") != null)?buttons = JSON.parse(localStorage.getItem("savedBtns")):saveBtns();
 }
 
 //adds a button when input is filled and (+) button is clicked
 $("#addGIFbtn").on("click", function () {
-    console.log($("#newBtnText").val())
-    
+    console.log($("#newBtnText").val());
+    console.log(buttons.btnInfo);
     if ($("#newBtnText").val() != "") {
         buttons.btnInfo.push($("#newBtnText").val());
         saveBtns();
